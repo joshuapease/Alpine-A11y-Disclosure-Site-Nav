@@ -7,7 +7,7 @@
     <title>Vite App</title>
   </head>
   <body>
-    <nav x-data="nav" @keyup.escape="popStack">
+    <nav x-data="nav" @keyup.escape="popStack(1)">
       <ul class="flex gap-6 bg-slate-100 p-10">
         <!-- Creating a scope for refs -->
         <li x-data x-id="['subnav']">
