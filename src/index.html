@@ -7,10 +7,14 @@
     <title>Vite App</title>
   </head>
   <body>
-    <nav x-data="nav" @keyup.escape="popStack(1)">
-      <ul class="flex gap-6 bg-slate-100 p-10">
+    <nav
+      class="bg-slate-100 p-10"
+      x-data="nav"
+      @keyup.escape.window="popStack(1)"
+    >
+      <ul class="inline-flex gap-6" @click.outside="resetStack()">
         <!-- Creating a scope for refs -->
-        <li x-data x-id="['subnav']">
+        <li class="relative" x-data x-id="['subnav']">
           <button
             :aria-expanded="isInStack($refs.subnav)"
             :aria-controls="$id('subnav')"
@@ -19,16 +23,17 @@
             Nav 1
           </button>
           <ul
+            class="absolute top-full left-0 bg-white text-nowrap p-3"
             :id="$id('subnav')"
-            x-trap="shouldTrap($el)"
+            x-trap="shouldTrap($refs.subnav)"
             x-ref="subnav"
-            :hidden="isHidden($el)"
-            hidden
+            x-show="isInStack($refs.subnav)"
+            x-transition
             data-index="0"
           >
             <li><a href="#">Nav 1 - Child 1</a></li>
             <li><a href="#">Nav 1 - Child 2</a></li>
-            <li x-data x-id="['subnav']">
+            <li class="relative" x-data x-id="['subnav']">
               <button
                 :aria-expanded="isInStack($refs.subnav)"
                 :aria-controls="$id('subnav')"
@@ -37,11 +42,12 @@
                 Nav 1 - Child 3
               </button>
               <ul
-                x-trap="shouldTrap($el)"
+                class="absolute left-full top-0 bg-white text-nowrap p-3"
                 :id="$id('subnav')"
+                x-trap="shouldTrap($refs.subnav)"
                 x-ref="subnav"
-                :hidden="isHidden($el)"
-                hidden
+                x-show="isInStack($refs.subnav)"
+                x-transition
                 data-index="1"
               >
                 <li><a href="#">Nav 1 - Grandchild 1</a></li>
@@ -52,7 +58,7 @@
           </ul>
         </li>
 
-        <li x-data x-id="['subnav']">
+        <li class="relative" x-data x-id="['subnav']">
           <button
             :aria-expanded="isInStack($refs.subnav)"
             :aria-controls="$id('subnav')"
@@ -61,15 +67,17 @@
             Nav 2
           </button>
           <ul
-            x-trap="shouldTrap($el)"
+            class="absolute top-full left-0 bg-white text-nowrap p-3"
             :id="$id('subnav')"
             x-ref="subnav"
-            :hidden="isHidden($el)"
+            x-trap="shouldTrap($refs.subnav)"
+            x-show="isInStack($refs.subnav)"
+            x-transition
             data-index="0"
           >
             <li><a href="#">Child 1</a></li>
             <li><a href="#">Child 2</a></li>
-            <li x-data x-id="['subnav']">
+            <li class="relative" x-data x-id="['subnav']">
               <button
                 :aria-expanded="isInStack($refs.subnav)"
                 :aria-controls="$id('subnav')"
@@ -78,11 +86,12 @@
                 Child 3
               </button>
               <ul
-                x-trap="shouldTrap($el)"
-                x-ref="subnav"
+                class="absolute left-full top-0 bg-white text-nowrap p-3"
                 :id="$id('subnav')"
-                :hidden="isHidden($el)"
-                hidden
+                x-ref="subnav"
+                x-trap="shouldTrap($refs.subnav)"
+                x-show="isInStack($refs.subnav)"
+                x-transition
                 data-index="1"
               >
                 <li><a href="#">Grandchild 1</a></li>
